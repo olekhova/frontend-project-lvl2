@@ -5,7 +5,8 @@ program.version('0.0.1');
 
 program
   .description('Compares two configuration files and shows a difference.')
-  .option('-f, --format <type>', 'output format')
+  .arguments('<firstConfig> <secondConfig>')
+  .option('-f, --format [type]', 'output format')
   .parse(process.argv);
 
 
