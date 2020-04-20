@@ -2,7 +2,7 @@
   "name": "frontend-project-lvl2",
   "version": "1.0.0",
   "description": "Hexlet project 2",
-  "main": "gendiff.js",
+  "main": "dist/gendiff.js",
   "dependencies": {
     "commander": "^5.0.0",
     "lodash": "^4.17.15"
@@ -25,6 +25,7 @@
   },
   "scripts": {
     "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+    "build-tests": "NODE_ENV=dev babel tests --out-dir dist --source-maps inline",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublishOnly": "npm run build"
   },
