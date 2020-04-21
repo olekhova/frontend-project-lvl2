@@ -1,17 +1,7 @@
-import { Command } from 'commander';
 import fs from 'fs';
 import { has, reduce } from 'lodash';
 
-const program = new Command();
-program.version('0.0.1');
-
-program
-  .description('Compares two configuration files and shows a difference.')
-  .arguments('<firstConfig> <secondConfig>')
-  .option('-f, --format [type]', 'output format')
-  .parse(process.argv);
-
-const genDiff = (pathToFirstFile, pathToSecondFile) => {
+const compare = (pathToFirstFile, pathToSecondFile) => {
   const firstFile = JSON.parse(fs.readFileSync(pathToFirstFile));
   const secondFile = JSON.parse(fs.readFileSync(pathToSecondFile));
   //console.log (firstFile , secondFile);
@@ -45,4 +35,4 @@ return `{${result} \n}`;
 
 
 
-export default genDiff;
+export default compare;
