@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import compare from '../compare';
+import genDiff from '../genDiff';
 
 const program = new Command();
 program.version('0.0.1');
@@ -10,7 +10,7 @@ program
   .option('-f, --format [type]', 'output format')
   .arguments('<firstConfig> <secondConfig>')
   .action((firstConfig, secondConfig) => {
-    console.log(compare(firstConfig, secondConfig));
+    console.log(genDiff(firstConfig, secondConfig));
   })
   .parse(process.argv);
 

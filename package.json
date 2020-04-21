@@ -2,7 +2,7 @@
   "name": "frontend-project-lvl2",
   "version": "1.0.0",
   "description": "Hexlet project 2",
-  "main": "dist/gendiff.js",
+  "main": "index.js",
   "dependencies": {
     "commander": "^5.0.0",
     "lodash": "^4.17.15"

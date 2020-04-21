@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { has, reduce } from 'lodash';
 
-const compare = (pathToFirstFile, pathToSecondFile) => {
+const genDiff = (pathToFirstFile, pathToSecondFile) => {
   const firstFile = JSON.parse(fs.readFileSync(pathToFirstFile));
   const secondFile = JSON.parse(fs.readFileSync(pathToSecondFile));
   //console.log (firstFile , secondFile);
@@ -35,4 +35,4 @@ return `{${result} \n}`;
 
 
 
-export default compare;
+export default genDiff;
