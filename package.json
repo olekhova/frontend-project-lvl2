@@ -3,6 +3,26 @@
   "version": "1.0.0",
   "description": "Hexlet project 2",
   "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+    "build-tests": "NODE_ENV=dev babel tests --out-dir dist --source-maps inline",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "npm run build"
+  },
+  "bin": {
+    "gendiff": "dist/bin/gendiff.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olekhova/frontend-project-lvl2.git"
+  },
+  "author": "Lyubov Olekhova",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olekhova/frontend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/olekhova/frontend-project-lvl2#readme",
   "dependencies": {
     "commander": "^5.0.0",
     "lodash": "^4.17.15"
@@ -17,26 +37,8 @@
     "debug": "^4.1.1",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jest": "^23.8.2",
     "jest": "^25.3.0",
     "jest-cli": "^25.3.0"
-  },
-  "scripts": {
-    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
-    "build-tests": "NODE_ENV=dev babel tests --out-dir dist --source-maps inline",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublishOnly": "npm run build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/olekhova/frontend-project-lvl2.git"
-  },
-  "author": "Lyubov Olekhova",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/olekhova/frontend-project-lvl2/issues"
-  },
-  "homepage": "https://github.com/olekhova/frontend-project-lvl2#readme"
+  }
 }
