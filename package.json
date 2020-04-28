@@ -6,8 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
-    "build-tests": "NODE_ENV=dev babel tests --out-dir dist --source-maps inline",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "prepublishOnly": "npm run build"
   },
   "bin": {
@@ -37,8 +36,10 @@
     "debug": "^4.1.1",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-import": "^2.20.2",
-    "jest": "^25.3.0",
+    "eslint-plugin-jest": "^23.8.2",
+    "jest": "^25.4.0",
     "jest-cli": "^25.3.0"
   }
 }
