@@ -1,28 +1,37 @@
 import fs from 'fs';
+import path from 'path';
 import { has, reduce } from 'lodash';
+import getParser from './parsers.js';
 
 const genDiff = (pathToFirstFile, pathToSecondFile) => {
-  const firstFile = JSON.parse(fs.readFileSync(pathToFirstFile));
-  const secondFile = JSON.parse(fs.readFileSync(pathToSecondFile));
+  const firstFileContents = fs.readFileSync(pathToFirstFile);
+  const firstFileExtName = path.extname(pathToFirstFile);
+  const firstFile = getParser(firstFileExtName)(firstFileContents);
+
+
+  const secondFileCntents = fs.readFileSync(pathToSecondFile);
+  const secondFileExtName = path.extname(pathToSecondFile);
+  const secondFile = getParser(secondFileExtName)(secondFileCntents);
+
   const entriesOfFirstFile = Object.entries(firstFile);
   const entriesOfSecondFile = Object.entries(secondFile);
 
-  const result1 = reduce(entriesOfFirstFile, (acc, kv) => {
-    if (has(secondFile, kv[0]) && (kv[1] === secondFile[kv[0]])) {
-      return `${acc}\n   ${kv[0]}: ${kv[1]}`;
+  const result1 = reduce(entriesOfFirstFile, (acc, keyValue) => {
+    if (has(secondFile, keyValue[0]) && (keyValue[1] === secondFile[keyValue[0]])) {
+      return `${acc}\n   ${keyValue[0]}: ${keyValue[1]}`;
     }
-    if (has(secondFile, kv[0]) && (kv[1] !== secondFile[kv[0]])) {
-      return `${acc}\n - ${kv[0]}: ${kv[1]}\n + ${kv[0]}: ${secondFile[kv[0]]}`;
+    if (has(secondFile, keyValue[0]) && (keyValue[1] !== secondFile[keyValue[0]])) {
+      return `${acc}\n - ${keyValue[0]}: ${keyValue[1]}\n + ${keyValue[0]}: ${secondFile[keyValue[0]]}`;
     }
-    if (!has(secondFile, kv[0])) {
-      return `${acc}\n - ${kv[0]}: ${kv[1]}`;
+    if (!has(secondFile, keyValue[0])) {
+      return `${acc}\n - ${keyValue[0]}: ${keyValue[1]}`;
     }
     return acc;
   }, '');
 
-  const result = reduce(entriesOfSecondFile, (acc, kv) => {
-    if (!has(firstFile, kv[0])) {
-      return `${acc}\n + ${kv[0]}: ${kv[1]}`;
+  const result = reduce(entriesOfSecondFile, (acc, keyValue) => {
+    if (!has(firstFile, keyValue[0])) {
+      return `${acc}\n + ${keyValue[0]}: ${keyValue[1]}`;
     }
     return acc;
   }, result1);
