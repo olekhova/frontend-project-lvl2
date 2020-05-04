@@ -1,4 +1,5 @@
 import yaml from 'js-yaml';
+import ini from 'ini';
 
 const getParser = (extName) => {
   if (extName === '.json') {
@@ -6,6 +7,9 @@ const getParser = (extName) => {
   }
   if (extName === '.yml') {
     return yaml.safeLoad;
+  }
+  if (extName === '.ini') {
+    return (s) => ini.decode(String(s));
   }
   return null;
 };

@@ -7,12 +7,9 @@ const genDiff = (pathToFirstFile, pathToSecondFile) => {
   const firstFileContents = fs.readFileSync(pathToFirstFile);
   const firstFileExtName = path.extname(pathToFirstFile);
   const firstFile = getParser(firstFileExtName)(firstFileContents);
-
-
   const secondFileCntents = fs.readFileSync(pathToSecondFile);
   const secondFileExtName = path.extname(pathToSecondFile);
   const secondFile = getParser(secondFileExtName)(secondFileCntents);
-
   const entriesOfFirstFile = Object.entries(firstFile);
   const entriesOfSecondFile = Object.entries(secondFile);
 
