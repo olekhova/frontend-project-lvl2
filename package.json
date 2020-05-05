@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
-    "test": "jest",
+    "test": "npx -n --experimental-vm-modules jest",
     "prepublishOnly": "npm run build"
   },
   "bin": {
