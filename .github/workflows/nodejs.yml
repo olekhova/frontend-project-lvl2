@@ -24,11 +24,18 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+        
+    - name: Prepare for test
+      run:
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+  
     - run: npm ci
     - run: npm run build --if-present
     - run: npx eslint .
-    - run: cc-test-reporter before-build
+    - run: ./cc-test-reporter before-build
     - run: npm test
-    - run: cc-test-reporter after-build -r  ${{ secrets.REPORTER_ID }}
+    - run: ./cc-test-reporter after-build 
       env:
         CI: true
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
