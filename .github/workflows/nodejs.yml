@@ -36,7 +36,7 @@ jobs:
           chmod +x ./cc-test-reporter
           ./cc-test-reporter before-build
     - run: npm test
-    - run: ./cc-test-reporter after-build 
+    - run: ./cc-test-reporter after-build -t lcov
       env:
         CI: true
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
