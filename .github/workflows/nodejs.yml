@@ -28,18 +28,10 @@ jobs:
   
     - run: npm ci
     - run: npm run build --if-present
-    - run: npx eslint .
-      
-    - name: Prepare for test
-      run: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
-          ./cc-test-reporter before-build
-    - run: npm test
-    - run: ./cc-test-reporter after-build -t lcov
+    - run: npx eslint .      
       env:
         CI: true
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+  
     - name: Test & publish code coverage
         # Publish code coverage on Code Climate
         # https://github.com/paambaati/codeclimate-action
