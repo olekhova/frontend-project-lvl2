@@ -7,3 +7,8 @@
 ### Сравнение плоских файлов json
 [![gendiff-json-screencast](https://asciinema.org/a/gtSJFkwDwi0T8SAvGO6Zeg6WP.png)](https://asciinema.org/a/gtSJFkwDwi0T8SAvGO6Zeg6WP)
 
+ ### Сравнение плоских файлов yml
+[![gendiff-yml-screencast](https://asciinema.org/a/zCic7dvqqxbNAC992Nt7QZrnx.png)](https://asciinema.org/a/zCic7dvqqxbNAC992Nt7QZrnx)
+
+ ### Сравнение плоских файлов ini
+[![gendiff-ini-screencast]( https://asciinema.org/a/OLXCoVj0Kgf84s88TSxVE0b54.png)](https://asciinema.org/a/OLXCoVj0Kgf84s88TSxVE0b54)
