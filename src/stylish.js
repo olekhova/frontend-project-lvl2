@@ -1,53 +1,22 @@
 const diffresult = {
   diff: [
     {
-      type: 'unchanged',
-      name: 'host',
-      value: 'hexlet.io',
-    },
-    {
-      type: 'changed',
-      name: 'timeout',
-      valueBefore: 50,
-      valueAfter: 20,
-    },
-    {
       type: 'deleted',
-      name: 'proxy',
-      value: '123.234.53.22',
+      name: 'b',
+      value: 100,
     },
     {
-      type: 'deleted',
-      name: 'follow',
-      value: false,
-    },
-    {
-      type: 'new',
-      name: 'verbose',
-      value: true,
-    },
-    {
-      type: 'Object',
-      name: 'obj',
+      type: 'newObject',
+      name: 'a',
       value: {
-        diff: [
-          {
-            type: 'unchanged',
-            name: 'verbose2',
-            value: true,
-          },
-          {
-            type: 'new',
-            name: 'verbose5',
-            value: true,
-          },
-          {
-            type: 'changed',
-            name: 'timeout5',
-            valueBefore: 5700,
-            valueAfter: 2066,
-          },
-        ],
+        x: {
+          key: 'key',
+          value: 'value',
+        },
+        y: {
+          x: 100,
+          y: 200,
+        },
       },
     },
   ],
@@ -69,13 +38,27 @@ const stylish = (obj) => {
         return `${top(indentStack)}- ${elem.name}: ${elem.value}`;
       case 'new':
         return `${top(indentStack)}+ ${elem.name}: ${elem.value}`;
-      case 'Object': {
+      case 'object': {
         const newLocalObj = elem.value;
         const { diff: newDiffList } = newLocalObj;
         const topIndent = top(indentStack);
         indentStack.push(`    ${topIndent}`);
         const objDiff = newDiffList.map(clbFunc).join('\n');
         const result = `  ${topIndent}${elem.name}: {\n${objDiff}\n  ${topIndent}}`;
+        indentStack.pop();
+        return result;
+      }
+      case 'newObject': {
+        const topIndent = top(indentStack);
+        indentStack.push(`    ${topIndent}`);
+        const result = `${topIndent}+ ${elem.name}: {\n    ${topIndent}"содержимое объекта, потом напишем"\n  ${topIndent}}`;
+        indentStack.pop();
+        return result;
+      }
+      case 'deletedObject': {
+        const topIndent = top(indentStack);
+        indentStack.push(`    ${topIndent}`);
+        const result = `${topIndent}- ${elem.name}: {\n    ${topIndent}"содержимое объекта, потом напишем"\n  ${topIndent}}`;
         indentStack.pop();
         return result;
       }
