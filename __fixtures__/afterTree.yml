@@ -5,7 +5,7 @@ common:
     key: value
   setting4: blah blah
   setting5: 
-    key5": value5
+    key5: value5
   setting6:
     key: value
     ops: vops

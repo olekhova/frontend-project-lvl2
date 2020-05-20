@@ -3,8 +3,8 @@ import fs from 'fs';
 import compareTree from '../src/compareTree.js';
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-const fileBefore = JSON.parse(fs.readFileSync(getFixturePath('beforeTree.json')));
-const fileAfter = JSON.parse(fs.readFileSync(getFixturePath('afterTree.json')));
+const fileBefore = JSON.parse(fs.readFileSync(getFixturePath('beforeTree.json', 'utf-8')));
+const fileAfter = JSON.parse(fs.readFileSync(getFixturePath('afterTree.json', 'utf-8')));
 const expected = [
   {
     type: 'object',

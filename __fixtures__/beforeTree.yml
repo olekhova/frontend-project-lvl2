@@ -9,5 +9,5 @@ group1:
   foo: bar
   nest: 
     key: value
-group2": 
+group2: 
   abc: 12345

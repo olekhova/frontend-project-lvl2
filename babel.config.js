@@ -6,4 +6,6 @@ module.exports = {
       },
     }],
   ],
+  sourceMaps: 'inline',
+  retainLines: true,
 };
