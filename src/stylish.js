@@ -1,11 +1,9 @@
 import { isObject } from 'lodash';
-// import { inspect } from 'util';
 
 const stylish = (diffList) => {
   const indentStack = [];
   indentStack.push('  ');
   const top = (stack) => stack[stack.length - 1];
-
   const printValue = (obj, topIndent, indent) => {
     if (!isObject(obj)) {
       return `${obj}`;
@@ -23,51 +21,26 @@ const stylish = (diffList) => {
     const inner = [...prettyPrintObject(obj, indent)].map((l) => `${topIndent}     ${l}\n`).join('');
     return `{\n${inner}${topIndent}  }`;
   };
-
-  const clbFunc = (elem) => {
-    switch (elem.type) {
-      case 'unchanged': {
-        const topIndent = top(indentStack);
-        indentStack.push(`    ${topIndent}`);
-        const result = `${topIndent}  ${elem.name}: ${printValue(elem.value, topIndent, ' ')}`;
-        indentStack.pop();
-        return result;
+  const clbFunc = (element) => {
+    const topIndent = top(indentStack);
+    const elemToString = (elem) => {
+      switch (elem.type) {
+        case 'unchanged': return `${topIndent}  ${elem.name}: ${printValue(elem.value, topIndent, ' ')}`;
+        case 'changed': return `${topIndent}- ${elem.name}: ${printValue(elem.valueBefore, topIndent, ' ')}\n${topIndent}+ ${elem.name}: ${printValue(elem.valueAfter, topIndent, ' ')}`;
+        case 'deleted': return `${topIndent}- ${elem.name}: ${printValue(elem.value, topIndent, ' ')}`;
+        case 'new': return `${topIndent}+ ${elem.name}: ${printValue(elem.value, topIndent, ' ')}`;
+        case 'object': {
+          const objDiff = elem.value.map(clbFunc).join('\n');
+          return `  ${topIndent}${elem.name}: {\n${objDiff}\n  ${topIndent}}`;
+        }
+        default:
+          return null;
       }
-      case 'changed': {
-        const topIndent = top(indentStack);
-        indentStack.push(`    ${topIndent}`);
-        const result = `${topIndent}- ${elem.name}: ${printValue(elem.valueBefore, topIndent, ' ')}\n${topIndent}+ ${elem.name}: ${printValue(elem.valueAfter, topIndent, ' ')}`;
-        indentStack.pop();
-        return result;
-      }
-      case 'deleted': {
-        const topIndent = top(indentStack);
-        indentStack.push(`    ${topIndent}`);
-        const result = `${topIndent}- ${elem.name}: ${printValue(elem.value, topIndent, ' ')}`;
-        indentStack.pop();
-        return result;
-      }
-      case 'new': {
-        const topIndent = top(indentStack);
-        indentStack.push(`    ${topIndent}`);
-        const result = `${topIndent}+ ${elem.name}: ${printValue(elem.value, topIndent, ' ')}`;
-        indentStack.pop();
-        return result;
-      }
-      case 'object': {
-        const newLocalObj = elem.value;
-        const topIndent = top(indentStack);
-        indentStack.push(`    ${topIndent}`);
-        const objDiff = newLocalObj.map(clbFunc).join('\n');
-        const result = `  ${topIndent}${elem.name}: {\n${objDiff}\n  ${topIndent}}`;
-        indentStack.pop();
-        return result;
-      }
-      // inspect(elem.value, { compact: false, depth: Infinity })
-      // JSON.stringify(elem.value, null, ' ')
-      default:
-        return null;
-    }
+    };
+    indentStack.push(`    ${topIndent}`);
+    const result = elemToString(element);
+    indentStack.pop();
+    return result;
   };
   return `{\n${diffList.map(clbFunc).join('\n')}\n}`;
 };
