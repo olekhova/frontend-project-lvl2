@@ -53,7 +53,7 @@ const expected = [
         value: 'blah blah',
       },
       {
-        type: 'newObject',
+        type: 'new',
         name: 'setting5',
         value: { key5: 'value5' },
       },
@@ -83,12 +83,12 @@ const expected = [
     ],
   },
   {
-    type: 'deletedObject',
+    type: 'deleted',
     name: 'group2',
     value: { abc: 12345 },
   },
   {
-    type: 'newObject',
+    type: 'new',
     name: 'group3',
     value: { fee: 100500 },
   },
