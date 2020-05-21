@@ -9,7 +9,6 @@ const getParser = (extName) => {
     return yaml.safeLoad;
   }
   if (extName === '.ini') {
-    // return (s) => ini.decode(String(s));
     return ini.parse;
   }
   return null;

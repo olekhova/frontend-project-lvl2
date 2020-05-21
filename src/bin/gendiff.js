@@ -7,9 +7,10 @@ const program = new Command();
 program.version('0.0.1');
 program
   .description('Compares two configuration files and shows a difference.')
-  .option('-f, --format [json, plain]', 'output format')
+  .option('-f, --format [output format]', 'output format: stylish (default), plain or json', 'stylish')
   .arguments('<firstConfig> <secondConfig>')
   .action((firstConfig, secondConfig) => {
-    console.log(genDiff(firstConfig, secondConfig, program.format));
+    const textResult = genDiff(firstConfig, secondConfig, program.format);
+    console.log(textResult);
   })
   .parse(process.argv);
