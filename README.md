@@ -17,7 +17,7 @@
 [![gendiff-jsonTree-screencast](https://asciinema.org/a/3i01eNgItwxV90H4nkiE7PSkk.png)](https://asciinema.org/a/3i01eNgItwxV90H4nkiE7PSkk)
 
 ### Сравнение файлов yml
-[![gendiff-ymlTree-screencast](https://asciinema.org/a/W9Dolvx4IkOt3fzPI3gyqIwdv.png)](https://asciinema.org/a/W9Dolvx4IkOt3fzPI3gyqIwdv)
+[![gendiff-ymlTree-screencast](https://asciinema.org/a/pmxrwQwfFH4bnsLtzfOxNtIhW.png)](https://asciinema.org/a/pmxrwQwfFH4bnsLtzfOxNtIhW)
 
 ### Сравнение файлов ini
-[![gendiff-iniTree-screencast](https://asciinema.org/a/tSoauZo26AJmcHKKyUjiuh2P8.png)](https://asciinema.org/a/tSoauZo26AJmcHKKyUjiuh2P8)
+[![gendiff-iniTree-screencast](https://asciinema.org/a/U2Loc4uTKA7gPrmePcevSkH24.png)](https://asciinema.org/a/U2Loc4uTKA7gPrmePcevSkH24)
