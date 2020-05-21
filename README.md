@@ -21,3 +21,6 @@
 
 ### Сравнение файлов ini
 [![gendiff-iniTree-screencast](https://asciinema.org/a/U2Loc4uTKA7gPrmePcevSkH24.png)](https://asciinema.org/a/U2Loc4uTKA7gPrmePcevSkH24)
+
+### Сравнение файлов в формате plain
+[![gendiff-plain-screencast](https://asciinema.org/a/yQDwBY0JRLXpDprsrpilvc2XQ.png)](https://asciinema.org/a/yQDwBY0JRLXpDprsrpilvc2XQ)
