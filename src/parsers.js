@@ -1,9 +1,9 @@
 import yaml from 'js-yaml';
 import ini from 'ini';
-import { isObject } from 'lodash';
+import { isObject, isString } from 'lodash';
 
 const cureIni = (obj) => {
-  if (typeof obj === 'string') {
+  if (isString(obj)) {
     const objNum = +obj;
     if (!Number.isNaN(objNum)) return objNum;
   }
@@ -22,7 +22,7 @@ const getParser = (extName) => {
   }
   if (extName === '.ini') {
     // return ini.parse;
-    return (s) => cureIni(ini.parse(String(s)));
+    return (s) => cureIni(ini.parse(s));
   }
   return null;
 };

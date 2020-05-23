@@ -1,8 +1,8 @@
-import { isObject } from 'lodash';
+import { isObject, isString } from 'lodash';
 
 const printValue = (vl) => {
   if (!isObject(vl)) {
-    if (typeof vl === 'string') {
+    if (isString(vl)) {
       return `'${vl}'`;
     }
     return `${vl}`;
