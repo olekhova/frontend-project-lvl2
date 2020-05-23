@@ -1,26 +1,28 @@
 import { isObject } from 'lodash';
 
+const top = (stack) => stack[stack.length - 1];
+
+const printValue = (obj, topIndent, indent) => {
+  if (!isObject(obj)) {
+    return `${obj}`;
+  }
+  const prettyPrintObject = (o, i) => Object.entries(o).reduce((acc, kv) => {
+    if (isObject(kv[1])) {
+      return [...acc,
+        `${i}${kv[0]}: {`,
+        ...prettyPrintObject(kv[1], `${indent}${i}`),
+        `${i}}`,
+      ];
+    }
+    return [...acc, `${i}${kv[0]}: ${kv[1]}`];
+  }, []);
+  const inner = [...prettyPrintObject(obj, indent)].map((l) => `${topIndent}     ${l}\n`).join('');
+  return `{\n${inner}${topIndent}  }`;
+};
+
 const stylish = (diffList) => {
   const indentStack = [];
   indentStack.push('  ');
-  const top = (stack) => stack[stack.length - 1];
-  const printValue = (obj, topIndent, indent) => {
-    if (!isObject(obj)) {
-      return `${obj}`;
-    }
-    const prettyPrintObject = (o, i) => Object.entries(o).reduce((acc, kv) => {
-      if (isObject(kv[1])) {
-        return [...acc,
-          `${i}${kv[0]}: {`,
-          ...prettyPrintObject(kv[1], `${indent}${i}`),
-          `${i}}`,
-        ];
-      }
-      return [...acc, `${i}${kv[0]}: ${kv[1]}`];
-    }, []);
-    const inner = [...prettyPrintObject(obj, indent)].map((l) => `${topIndent}     ${l}\n`).join('');
-    return `{\n${inner}${topIndent}  }`;
-  };
   const clbFunc = (element) => {
     const topIndent = top(indentStack);
     const elemToString = (elem) => {
