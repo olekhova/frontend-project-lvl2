@@ -9,30 +9,30 @@ const compareTree = (firstObject, secondObject) => {
   const entriesOfFirstObject = Object.entries(firstObject);
   const entriesOfSecondObject = Object.entries(secondObject);
   const pass1 = entriesOfFirstObject
-    .map((keyValue) => {
+    .map(([key, value]) => {
       /* Ключи совпали */
-      if (has(secondObject, keyValue[0])) {
+      if (has(secondObject, key)) {
         /* Оба значения - не объекты */
-        if (!isObject(keyValue[1]) && !isObject(secondObject[keyValue[0]])) {
-          if (keyValue[1] === secondObject[keyValue[0]]) {
-            return createElement('unchanged', keyValue[0], keyValue[1]);
+        if (!isObject(value) && !isObject(secondObject[key])) {
+          if (value === secondObject[key]) {
+            return createElement('unchanged', key, value);
           }
-          return createElementChanged('changed', keyValue[0], keyValue[1], secondObject[keyValue[0]]);
+          return createElementChanged('changed', key, value, secondObject[key]);
         }
         /* Первое значени - поле, второе - объект (или наоборот) */
-        if ((!isObject(keyValue[1]) && isObject(secondObject[keyValue[0]]))
-        || (isObject(keyValue[1]) && !isObject(secondObject[keyValue[0]]))) {
-          return createElementChanged('changed', keyValue[0], keyValue[1], secondObject[keyValue[0]]);
+        if ((!isObject(value) && isObject(secondObject[key]))
+        || (isObject(value) && !isObject(secondObject[key]))) {
+          return createElementChanged('changed', key, value, secondObject[key]);
         }
         /* Оба значения - объекты */
-        return createElement('object', keyValue[0], compareTree(keyValue[1], secondObject[keyValue[0]]));
+        return createElement('object', key, compareTree(value, secondObject[key]));
       }
       /* Ключа нет во втором объекте */
-      return createElement('deleted', keyValue[0], keyValue[1]);
+      return createElement('deleted', key, value);
     });
   const pass2 = entriesOfSecondObject
-    .filter((keyValue) => !has(firstObject, keyValue[0]))
-    .map((keyValue) => createElement('new', keyValue[0], keyValue[1]));
+    .filter(([key]) => !has(firstObject, key))
+    .map(([key, value]) => createElement('new', key, value));
   const result = pass1.concat(pass2);
   return result;
 };

@@ -100,13 +100,13 @@ const configTypes = ['.json', '.yml', '.ini'];
 
 // [ {'json', jsonBefore, jsonAfter}, {'yml', ymlBefore, ymlAfter}, ...]
 const testData = configTypes.map((ext) => {
-  console.log(`preparing data: ${ext}`);
+//  console.log(`preparing data: ${ext}`);
   const beforeFileName = `beforeTree${ext}`;
   const afterFileName = `afterTree${ext}`;
   const firstFileContents = fs.readFileSync(getFixturePath(beforeFileName), 'utf-8');
   const secondFileContents = fs.readFileSync(getFixturePath(afterFileName), 'utf-8');
-  console.log(typeof firstFileContents);
-  console.log(typeof secondFileContents);
+  // console.log(typeof firstFileContents);
+  // console.log(typeof secondFileContents);
   const beforeObject = getParser(ext)(firstFileContents);
   const afterObject = getParser(ext)(secondFileContents);
   return [ext, beforeObject, afterObject];
