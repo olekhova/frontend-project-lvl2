@@ -1,15 +1,16 @@
 import { isObject } from 'lodash';
 
-const plain = (diffLList) => {
-  const printValue = (vl) => {
-    if (!isObject(vl)) {
-      if (typeof vl === 'string') {
-        return `'${vl}'`;
-      }
-      return `${vl}`;
+const printValue = (vl) => {
+  if (!isObject(vl)) {
+    if (typeof vl === 'string') {
+      return `'${vl}'`;
     }
-    return '[complex value]';
-  };
+    return `${vl}`;
+  }
+  return '[complex value]';
+};
+
+const plain = (diffLList) => {
   const clbFunc = (elem, topName) => {
     const prefix = topName ? `${topName}` : '';
     switch (elem.type) {
