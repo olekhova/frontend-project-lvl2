@@ -11,6 +11,7 @@ const configTypes = [['json'], ['yml'], ['ini']];
 const expected = fs.readFileSync(getFixturePath('result.txt'), 'utf-8');
 const expectedTree = fs.readFileSync(getFixturePath('resultTree.txt'), 'utf-8');
 const expectedPlain = fs.readFileSync(getFixturePath('resultPlain.txt'), 'utf-8');
+const expectedJson = fs.readFileSync(getFixturePath('resultJson.txt'), 'utf-8');
 
 describe.each(configTypes)('genDiff %s', (configType) => {
   test('flat', () => {
@@ -24,5 +25,9 @@ describe.each(configTypes)('genDiff %s', (configType) => {
   test('treePlain', () => {
     const result = genDiff(`${fileBeforeTree}.${configType}`, `${fileAfterTree}.${configType}`, 'plain');
     expect(result).toEqual(expectedPlain);
+  });
+  test('treeJson', () => {
+    const result = genDiff(`${fileBeforeTree}.${configType}`, `${fileAfterTree}.${configType}`, 'json');
+    expect(result).toEqual(expectedJson);
   });
 });

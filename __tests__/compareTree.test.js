@@ -2,9 +2,9 @@ import path from 'path';
 import fs from 'fs';
 import compareTree from '../src/compareTree.js';
 
-const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-const fileBefore = JSON.parse(fs.readFileSync(getFixturePath('beforeTree.json', 'utf-8')));
-const fileAfter = JSON.parse(fs.readFileSync(getFixturePath('afterTree.json', 'utf-8')));
+import getParser from '../src/parsers.js';
+
+
 const expected = [
   {
     type: 'object',
@@ -94,7 +94,27 @@ const expected = [
   },
 ];
 
-test('compareTree', () => {
-  const result = compareTree(fileBefore, fileAfter);
-  expect(result).toEqual(expected);
+const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+
+const configTypes = ['.json', '.yml', '.ini'];
+
+// [ {'json', jsonBefore, jsonAfter}, {'yml', ymlBefore, ymlAfter}, ...]
+const testData = configTypes.map((ext) => {
+  console.log(`preparing data: ${ext}`);
+  const beforeFileName = `beforeTree${ext}`;
+  const afterFileName = `afterTree${ext}`;
+  const firstFileContents = fs.readFileSync(getFixturePath(beforeFileName), 'utf-8');
+  const secondFileContents = fs.readFileSync(getFixturePath(afterFileName), 'utf-8');
+  console.log(typeof firstFileContents);
+  console.log(typeof secondFileContents);
+  const beforeObject = getParser(ext)(firstFileContents);
+  const afterObject = getParser(ext)(secondFileContents);
+  return [ext, beforeObject, afterObject];
+});
+
+describe.each(testData)('compare %s', (ext, before, after) => {
+  test('compareTree', () => {
+    const result = compareTree(before, after);
+    expect(result).toEqual(expected);
+  });
 });
