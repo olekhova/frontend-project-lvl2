@@ -20,7 +20,7 @@ const compareTree = (firstObject, secondObject) => {
           }
           return createElementChanged('changed', key, value, secondObject[key]);
         }
-        /* Первое значени - поле, второе - объект (или наоборот) */
+        /* Первое значение - поле, второе - объект (или наоборот) */
         if ((!isObject(value) && isObject(secondObject[key]))
         || (isObject(value) && !isObject(secondObject[key]))) {
           return createElementChanged('changed', key, value, secondObject[key]);

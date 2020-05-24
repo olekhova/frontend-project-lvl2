@@ -6,15 +6,15 @@ const printValue = (obj, topIndent, indent) => {
   if (!isObject(obj)) {
     return `${obj}`;
   }
-  const prettyPrintObject = (o, i) => Object.entries(o).reduce((acc, kv) => {
-    if (isObject(kv[1])) {
+  const prettyPrintObject = (o, i) => Object.entries(o).reduce((acc, [k, v]) => {
+    if (isObject(v)) {
       return [...acc,
-        `${i}${kv[0]}: {`,
-        ...prettyPrintObject(kv[1], `${indent}${i}`),
+        `${i}${k}: {`,
+        ...prettyPrintObject(v, `${indent}${i}`),
         `${i}}`,
       ];
     }
-    return [...acc, `${i}${kv[0]}: ${kv[1]}`];
+    return [...acc, `${i}${k}: ${v}`];
   }, []);
   const inner = [...prettyPrintObject(obj, indent)].map((l) => `${topIndent}     ${l}\n`).join('');
   return `{\n${inner}${topIndent}  }`;
