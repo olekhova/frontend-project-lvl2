@@ -18,7 +18,7 @@ const plain = (diffLList) => {
       case 'deleted': return `Property '${prefix}${elem.name}' was deleted`;
       case 'new': return `Property '${prefix}${elem.name}' was added with value: ${printValue(elem.value)}`;
       case 'object': {
-        const newDiffList = elem.value;
+        const newDiffList = elem.children;
         const newTopName = `${topName}${elem.name}.`;
         return newDiffList.filter((newElem) => newElem.type !== 'unchanged').map((newElem) => clbFunc(newElem, newTopName)).join('\n');
       }

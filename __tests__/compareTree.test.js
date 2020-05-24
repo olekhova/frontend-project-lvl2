@@ -9,7 +9,7 @@ const expected = [
   {
     type: 'object',
     name: 'common',
-    value: [
+    children: [
       {
         type: 'unchanged',
         name: 'setting1',
@@ -29,7 +29,7 @@ const expected = [
       {
         type: 'object',
         name: 'setting6',
-        value: [
+        children: [
           {
             type: 'unchanged',
             name: 'key',
@@ -62,7 +62,7 @@ const expected = [
   {
     type: 'object',
     name: 'group1',
-    value: [
+    children: [
       {
         type: 'changed',
         name: 'baz',

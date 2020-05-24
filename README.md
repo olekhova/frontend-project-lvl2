@@ -26,4 +26,4 @@
 [![gendiff-plain-screencast](https://asciinema.org/a/yQDwBY0JRLXpDprsrpilvc2XQ.png)](https://asciinema.org/a/yQDwBY0JRLXpDprsrpilvc2XQ)
 
 ### Сравнение файлов в формате json
-[![gendiff-formatterJson-screencast](https://asciinema.org/a/1sguQ8LHmfjnp26pSkavcOETs.png)](https://asciinema.org/a/1sguQ8LHmfjnp26pSkavcOETs)
+[![gendiff-formatterJson-screencast](https://asciinema.org/a/kIxRU3xdXu8E2iVtJM8HFtzAp.png)](https://asciinema.org/a/kIxRU3xdXu8E2iVtJM8HFtzAp)

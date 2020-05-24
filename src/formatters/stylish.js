@@ -32,7 +32,7 @@ const stylish = (diffList) => {
         case 'deleted': return `${topIndent}- ${elem.name}: ${printValue(elem.value, topIndent, ' ')}`;
         case 'new': return `${topIndent}+ ${elem.name}: ${printValue(elem.value, topIndent, ' ')}`;
         case 'object': {
-          const objDiff = elem.value.map(clbFunc).join('\n');
+          const objDiff = elem.children.map(clbFunc).join('\n');
           return `  ${topIndent}${elem.name}: {\n${objDiff}\n  ${topIndent}}`;
         }
         default:

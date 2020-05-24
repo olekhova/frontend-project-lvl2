@@ -4,6 +4,7 @@ const createElement = (type, name, value) => ({ type, name, value });
 const createElementChanged = (type, name, valueBefore, valueAfter) => ({
   type, name, valueBefore, valueAfter,
 });
+const createElementChildren = (type, name, children) => ({ type, name, children });
 
 const compareTree = (firstObject, secondObject) => {
   const entriesOfFirstObject = Object.entries(firstObject);
@@ -25,7 +26,7 @@ const compareTree = (firstObject, secondObject) => {
           return createElementChanged('changed', key, value, secondObject[key]);
         }
         /* Оба значения - объекты */
-        return createElement('object', key, compareTree(value, secondObject[key]));
+        return createElementChildren('object', key, compareTree(value, secondObject[key]));
       }
       /* Ключа нет во втором объекте */
       return createElement('deleted', key, value);
