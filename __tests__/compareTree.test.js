@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import compareTree from '../src/compareTree.js';
+import compareTree from '../src/compare.js';
 
 import getParser from '../src/parsers.js';
 

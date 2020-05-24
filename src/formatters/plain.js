@@ -23,7 +23,7 @@ const plain = (diffLList) => {
         return newDiffList.filter((newElem) => newElem.type !== 'unchanged').map((newElem) => clbFunc(newElem, newTopName)).join('\n');
       }
       default:
-        return null;
+        throw new Error(`Unknown elem type: '${elem.type}'!`);
     }
   };
   const result = `${diffLList.filter((elem) => elem.type !== 'unchanged').map((elem) => clbFunc(elem, '')).join('\n')}`;
