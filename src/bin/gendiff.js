@@ -10,7 +10,11 @@ program
   .option('-f, --format [output format]', 'output format: stylish (default), plain or json', 'stylish')
   .arguments('<firstConfig> <secondConfig>')
   .action((firstConfig, secondConfig) => {
-    const textResult = genDiff(firstConfig, secondConfig, program.format);
-    console.log(textResult);
+    try {
+      const textResult = genDiff(firstConfig, secondConfig, program.format);
+      console.log(textResult);
+    } catch (message) {
+      console.log(`Была ошибка: ${message}`);
+    }
   })
   .parse(process.argv);

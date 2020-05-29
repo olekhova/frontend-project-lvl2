@@ -4,21 +4,26 @@ import getParser from './parsers.js';
 import getFormatter from './formatters/index.js';
 import compare from './compare.js';
 
-const getParserTypeFromExtension = (fileExtention) => {
-  switch (fileExtention) {
+const getParserType = (pathToFile) => {
+  const fileExtName = path.extname(pathToFile);
+  switch (fileExtName) {
     case '.json': return 'json';
-    case '.yml': return 'yml';
+    case '.yml':
+    case '.yaml': return 'yml';
     case '.ini': return 'ini';
     default:
-      throw new Error(`Unknown file extention: '${fileExtention}'!`);
+      throw new Error(`Unsupported file type: '${pathToFile}'!`);
   }
 };
 
 const readConfigFromFile = (pathToFile) => {
-  const fileContent = fs.readFileSync(pathToFile, 'utf-8');
-  const fileExtName = path.extname(pathToFile);
-  const fileType = getParserTypeFromExtension(fileExtName);
-  return getParser(fileType)(fileContent);
+  const fileType = getParserType(pathToFile);
+  try {
+    const fileContent = fs.readFileSync(pathToFile, 'utf-8');
+    return getParser(fileType)(fileContent);
+  } catch {
+    throw new Error(`Error opening file: '${pathToFile}'`);
+  }
 };
 
 const genDiff = (pathToFirstFile, pathToSecondFile, formatter) => {

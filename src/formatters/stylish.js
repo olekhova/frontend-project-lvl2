@@ -36,7 +36,7 @@ const stylish = (diffList) => {
           return `  ${topIndent}${elem.name}: {\n${objDiff}\n  ${topIndent}}`;
         }
         default:
-          throw new Error(`Unknown elem type: '${elem.type}'!`);
+          throw new Error(`Unknown element type: '${elem.type}'!`);
       }
     };
     indentStack.push(`    ${topIndent}`);
