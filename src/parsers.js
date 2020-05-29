@@ -2,29 +2,25 @@ import yaml from 'js-yaml';
 import ini from 'ini';
 import { isObject, isString } from 'lodash';
 
-const cureIni = (obj) => {
+const convertNumericString = (obj) => {
   if (isString(obj)) {
     const objNum = +obj;
     if (!Number.isNaN(objNum)) return objNum;
   }
   if (!isObject(obj)) return obj;
   return Object.entries(obj).reduce((acc, [key, value]) => ({
-    ...acc, [key]: cureIni(value),
+    ...acc, [key]: convertNumericString(value),
   }), {});
 };
 
-const getParser = (extName) => {
-  if (extName === '.json') {
-    return JSON.parse;
+const getParser = (parserType) => {
+  switch (parserType) {
+    case 'json': return JSON.parse;
+    case 'yml': return yaml.safeLoad;
+    case 'ini': return (s) => convertNumericString(ini.parse(s));
+    default: {
+      throw new Error(`Unknown parser type: '${parserType}'!`);
+    }
   }
-  if (extName === '.yml') {
-    return yaml.safeLoad;
-  }
-  if (extName === '.ini') {
-    // return ini.parse;
-    return (s) => cureIni(ini.parse(s));
-  }
-  return null;
 };
-
 export default getParser;
