@@ -1,4 +1,4 @@
-import { has, isObject } from 'lodash';
+import { has, isObject, union } from 'lodash';
 
 const createElement = (type, name, value) => ({ type, name, value });
 const createElementChanged = (type, name, valueBefore, valueAfter) => ({
@@ -9,33 +9,27 @@ const createElementChildren = (type, name, children) => ({ type, name, children 
 const compare = (firstObject, secondObject) => {
   const keysOfFirstObject = Object.keys(firstObject);
   const keysOfSecondObject = Object.keys(secondObject);
-  const pass1 = keysOfFirstObject
-    .map((key) => {
-      /* Ключи совпали */
-      if (has(secondObject, key)) {
-        /* Оба значения - не объекты */
-        if (!isObject(firstObject[key]) && !isObject(secondObject[key])) {
-          if (firstObject[key] === secondObject[key]) {
-            return createElement('unchanged', key, firstObject[key]);
-          }
-          return createElementChanged('changed', key, firstObject[key], secondObject[key]);
+  const keysOfTwoObject = union(keysOfFirstObject, keysOfSecondObject);
+  const ast = keysOfTwoObject.map((key) => {
+    if (has(firstObject, key) && has(secondObject, key)) {
+      if (!isObject(firstObject[key]) && !isObject(secondObject[key])) {
+        if (firstObject[key] === secondObject[key]) {
+          return createElement('unchanged', key, firstObject[key]);
         }
-        /* Первое значение - поле, второе - объект (или наоборот) */
-        if ((!isObject(firstObject[key]) && isObject(secondObject[key]))
-          || (isObject(firstObject[key]) && !isObject(secondObject[key]))) {
-          return createElementChanged('changed', key, firstObject[key], secondObject[key]);
-        }
-        /* Оба значения - объекты */
-        return createElementChildren('object', key, compare(firstObject[key], secondObject[key]));
+        return createElementChanged('changed', key, firstObject[key], secondObject[key]);
       }
-      /* Ключа нет во втором объекте */
+      if ((!isObject(firstObject[key]) && isObject(secondObject[key]))
+        || (isObject(firstObject[key]) && !isObject(secondObject[key]))) {
+        return createElementChanged('changed', key, firstObject[key], secondObject[key]);
+      }
+      return createElementChildren('object', key, compare(firstObject[key], secondObject[key]));
+    }
+    if (has(firstObject, key)) {
       return createElement('deleted', key, firstObject[key]);
-    });
-  const pass2 = keysOfSecondObject
-    .filter((key) => !has(firstObject, key))
-    .map((key) => createElement('new', key, secondObject[key]));
-  const result = pass1.concat(pass2);
-  return result;
+    }
+    return createElement('new', key, secondObject[key]);
+  });
+  return ast;
 };
 
 export default compare;

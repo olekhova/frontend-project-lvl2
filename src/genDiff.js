@@ -4,17 +4,7 @@ import getParser from './parsers.js';
 import getFormatter from './formatters/index.js';
 import compare from './compare.js';
 
-const getParserType = (pathToFile) => {
-  const fileExtName = path.extname(pathToFile);
-  switch (fileExtName) {
-    case '.json': return 'json';
-    case '.yml':
-    case '.yaml': return 'yml';
-    case '.ini': return 'ini';
-    default:
-      throw new Error(`Unsupported file type: '${pathToFile}'!`);
-  }
-};
+const getParserType = (pathToFile) => path.extname(pathToFile).slice(1);
 
 const readConfigFromFile = (pathToFile) => {
   const fileType = getParserType(pathToFile);

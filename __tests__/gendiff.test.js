@@ -6,9 +6,11 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 const fileBefore = getFixturePath('before');
 const fileAfter = getFixturePath('after');
 const configTypes = [['json'], ['yml'], ['ini']];
-const expectedStylish = fs.readFileSync(getFixturePath('resultStylish.txt'), 'utf-8');
-const expectedPlain = fs.readFileSync(getFixturePath('resultPlain.txt'), 'utf-8');
-const expectedJson = fs.readFileSync(getFixturePath('resultJson.txt'), 'utf-8');
+
+const readFile = (fileName) => fs.readFileSync(getFixturePath(fileName), 'utf-8');
+const expectedStylish = readFile('resultStylish.txt');
+const expectedPlain = readFile('resultPlain.txt');
+const expectedJson = readFile('resultJson.txt');
 
 describe.each(configTypes)('genDiff %s', (configType) => {
   test('genDiffStylish', () => {
