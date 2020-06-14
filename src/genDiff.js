@@ -8,12 +8,8 @@ const getParserType = (pathToFile) => path.extname(pathToFile).slice(1);
 
 const readConfigFromFile = (pathToFile) => {
   const fileType = getParserType(pathToFile);
-  try {
-    const fileContent = fs.readFileSync(pathToFile, 'utf-8');
-    return getParser(fileType)(fileContent);
-  } catch {
-    throw new Error(`Error opening file: '${pathToFile}'`);
-  }
+  const fileContent = fs.readFileSync(pathToFile, 'utf-8');
+  return getParser(fileType)(fileContent);
 };
 
 const genDiff = (pathToFirstFile, pathToSecondFile, formatter) => {
