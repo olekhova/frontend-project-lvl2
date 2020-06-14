@@ -6,7 +6,6 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 const fileNameBefore = getFixturePath('before');
 const fileNameAfter = getFixturePath('after');
 const configTypes = [['json'], ['yml'], ['ini']];
-
 const readFile = (fileName) => fs.readFileSync(getFixturePath(fileName), 'utf-8');
 const formatters = ['', 'plain', 'json'];
 
