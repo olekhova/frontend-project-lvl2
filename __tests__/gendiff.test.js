@@ -8,7 +8,7 @@ const fileNameAfter = getFixturePath('after');
 const configTypes = [['json'], ['yml'], ['ini']];
 
 const readFile = (fileName) => fs.readFileSync(getFixturePath(fileName), 'utf-8');
-const formatters = ['', 'Plain', 'Json'];
+const formatters = ['', 'plain', 'json'];
 
 describe.each(configTypes)('genDiff %s', (configType) => {
   test.each(formatters)('genDiff%s', (formatter) => {
