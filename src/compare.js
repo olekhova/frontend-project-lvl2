@@ -11,10 +11,10 @@ const compare = (firstObject, secondObject) => {
   const keysOfSecondObject = Object.keys(secondObject);
   const keysOfTwoObjects = union(keysOfFirstObject, keysOfSecondObject);
   return keysOfTwoObjects.map((key) => {
-    if (has(firstObject, key) && !has(secondObject, key)) return createElement('deleted', key, firstObject[key]);
-    if (!has(firstObject, key) && has(secondObject, key)) return createElement('new', key, secondObject[key]);
+    if (!has(secondObject, key)) return createElement('deleted', key, firstObject[key]);
+    if (!has(firstObject, key)) return createElement('new', key, secondObject[key]);
     if (firstObject[key] === secondObject[key]) return createElement('unchanged', key, firstObject[key]);
-    if (!isObject(firstObject[key]) || !isObject(secondObject[key])) return createElementChanged('changed', key, firstObject[key], secondObject[key]);
+    if (!(isObject(firstObject[key]) && isObject(secondObject[key]))) return createElementChanged('changed', key, firstObject[key], secondObject[key]);
     return createElementChildren('object', key, compare(firstObject[key], secondObject[key]));
   });
 };
