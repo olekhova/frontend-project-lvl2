@@ -2,7 +2,7 @@ import { isObject } from 'lodash';
 
 const top = (stack) => stack[stack.length - 1];
 
-const printValue = (obj, topIndent, indent) => {
+const getValue = (obj, topIndent, indent) => {
   if (!isObject(obj)) {
     return `${obj}`;
   }
@@ -27,10 +27,10 @@ const stylish = (diffList) => {
     const topIndent = top(indentStack);
     const elemToString = (elem) => {
       switch (elem.type) {
-        case 'unchanged': return `${topIndent}  ${elem.name}: ${printValue(elem.value, topIndent, ' ')}`;
-        case 'changed': return `${topIndent}- ${elem.name}: ${printValue(elem.valueBefore, topIndent, ' ')}\n${topIndent}+ ${elem.name}: ${printValue(elem.valueAfter, topIndent, ' ')}`;
-        case 'deleted': return `${topIndent}- ${elem.name}: ${printValue(elem.value, topIndent, ' ')}`;
-        case 'new': return `${topIndent}+ ${elem.name}: ${printValue(elem.value, topIndent, ' ')}`;
+        case 'unchanged': return `${topIndent}  ${elem.name}: ${getValue(elem.value, topIndent, ' ')}`;
+        case 'changed': return `${topIndent}- ${elem.name}: ${getValue(elem.valueBefore, topIndent, ' ')}\n${topIndent}+ ${elem.name}: ${getValue(elem.valueAfter, topIndent, ' ')}`;
+        case 'deleted': return `${topIndent}- ${elem.name}: ${getValue(elem.value, topIndent, ' ')}`;
+        case 'new': return `${topIndent}+ ${elem.name}: ${getValue(elem.value, topIndent, ' ')}`;
         case 'object': {
           const objDiff = elem.children.map(clbFunc).join('\n');
           return `  ${topIndent}${elem.name}: {\n${objDiff}\n  ${topIndent}}`;
