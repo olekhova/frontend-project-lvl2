@@ -7,12 +7,12 @@ const fileNameBefore = getFixturePath('before');
 const fileNameAfter = getFixturePath('after');
 const configTypes = [['json'], ['yml'], ['ini']];
 const readFile = (fileName) => fs.readFileSync(getFixturePath(fileName), 'utf-8');
-const formatters = ['', 'plain', 'json'];
+const formatNames = ['', 'plain', 'json'];
 
 describe.each(configTypes)('genDiff %s', (configType) => {
-  test.each(formatters)('genDiff%s', (formatter) => {
-    const result = genDiff(`${fileNameBefore}.${configType}`, `${fileNameAfter}.${configType}`, `${formatter}`);
-    const expected = readFile(`result${formatter}.txt`);
+  test.each(formatNames)('genDiff%s', (formatName) => {
+    const result = genDiff(`${fileNameBefore}.${configType}`, `${fileNameAfter}.${configType}`, formatName);
+    const expected = readFile(`result${formatName}.txt`);
     expect(result).toEqual(expected);
   });
 });
