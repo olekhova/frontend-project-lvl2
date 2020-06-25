@@ -15,7 +15,8 @@ const readConfigFromFile = (pathToFile) => {
 const genDiff = (pathToFirstFile, pathToSecondFile, formatter) => {
   const firstConfig = readConfigFromFile(pathToFirstFile);
   const secondConfig = readConfigFromFile(pathToSecondFile);
-  const genDiffResult = getFormatter(formatter)(compare(firstConfig, secondConfig));
+  const internalRepresentation = compare(firstConfig, secondConfig);
+  const genDiffResult = getFormatter(formatter)(internalRepresentation);
   return genDiffResult;
 };
 
