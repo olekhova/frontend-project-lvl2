@@ -1,45 +1,37 @@
 import { isObject } from 'lodash';
 
-const top = (stack) => stack[stack.length - 1];
-const getValue = (obj, topIndent, indent) => {
-  if (!isObject(obj)) {
-    return `${obj}`;
+const getValue = (localValue, topIndent, indentStep) => {
+  if (!isObject(localValue)) {
+    return `${localValue}`;
   }
-  const prettyPrintObject = (o, i) => Object.entries(o).reduce((acc, [k, v]) => {
-    if (isObject(v)) {
-      return [...acc, `${i}${k}: {`, ...prettyPrintObject(v, `${indent}${i}`), `${i}}`];
-    }
-    return [...acc, `${i}${k}: ${v}`];
-  }, []);
-  const inner = [...prettyPrintObject(obj, indent)].map((l) => `${topIndent}     ${l}\n`).join('');
-  return `{\n${inner}${topIndent}  }`;
+  const localKeys = Object.keys(localValue);
+  const newTopIndent = `${topIndent}${indentStep}`;
+  const innerString = localKeys
+    .map((key) => `${topIndent}${indentStep.repeat(3)}${key}: ${getValue(localValue[key], newTopIndent, indentStep)}`)
+    .join('\n');
+  return `{\n${innerString}\n${newTopIndent}}`;
 };
 
 const stylish = (diffList) => {
-  const indentStack = [];
-  indentStack.push('  ');
-  const clbFunc = (element) => {
-    const topIndent = top(indentStack);
-    const elemToString = (elem) => {
+  const iter = (localDiffList, topIndent, indentStep) => localDiffList
+    .map((elem) => {
       switch (elem.type) {
-        case 'unchanged': return `${topIndent}  ${elem.name}: ${getValue(elem.value, topIndent, ' ')}`;
-        case 'changed': return `${topIndent}- ${elem.name}: ${getValue(elem.valueBefore, topIndent, ' ')}\n${topIndent}+ ${elem.name}: ${getValue(elem.valueAfter, topIndent, ' ')}`;
-        case 'deleted': return `${topIndent}- ${elem.name}: ${getValue(elem.value, topIndent, ' ')}`;
-        case 'added': return `${topIndent}+ ${elem.name}: ${getValue(elem.value, topIndent, ' ')}`;
+        case 'unchanged': return `${topIndent}  ${elem.name}: ${getValue(elem.value, topIndent, indentStep)}`;
+        case 'changed': return `${topIndent}- ${elem.name}: ${getValue(elem.valueBefore, topIndent, indentStep)}\n${topIndent}+ ${elem.name}: ${getValue(elem.valueAfter, topIndent, indentStep)}`;
+        case 'deleted': return `${topIndent}- ${elem.name}: ${getValue(elem.value, topIndent, indentStep)}`;
+        case 'added': return `${topIndent}+ ${elem.name}: ${getValue(elem.value, topIndent, indentStep)}`;
         case 'object': {
-          const objDiff = elem.children.map(clbFunc).join('\n');
-          return `  ${topIndent}${elem.name}: {\n${objDiff}\n  ${topIndent}}`;
+          const newDiffList = elem.children;
+          const newTopIndent = `${topIndent}${indentStep.repeat(2)}`;
+          return `${topIndent}  ${elem.name}: {\n${iter(newDiffList, newTopIndent, indentStep)}\n${topIndent}${indentStep}}`;
         }
         default:
           throw new Error(`Unknown element type: '${elem.type}'!`);
       }
-    };
-    indentStack.push(`    ${topIndent}`);
-    const result = elemToString(element);
-    indentStack.pop();
-    return result;
-  };
-  return `{\n${diffList.map(clbFunc).join('\n')}\n}`;
+    }).join('\n');
+  const result = `{\n${iter(diffList, '  ', '  ')}\n}`;
+  console.log(result);
+  return result;
 };
 
 export default stylish;
