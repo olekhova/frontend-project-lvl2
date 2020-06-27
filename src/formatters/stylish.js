@@ -6,10 +6,10 @@ const getValue = (localValue, topIndent, indentStep) => {
   }
   const localKeys = Object.keys(localValue);
   const newTopIndent = `${topIndent}${indentStep}`;
-  const innerString = localKeys
+  const innerValue = localKeys
     .map((key) => `${topIndent}${indentStep.repeat(3)}${key}: ${getValue(localValue[key], newTopIndent, indentStep)}`)
     .join('\n');
-  return `{\n${innerString}\n${newTopIndent}}`;
+  return `{\n${innerValue}\n${newTopIndent}}`;
 };
 
 const stylish = (diffList) => {
