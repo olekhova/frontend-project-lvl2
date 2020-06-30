@@ -9,14 +9,10 @@ const getValue = (value) => {
   }
   return `${value}`;
 };
-const isUnchanged = (elemType) => {
-  if (elemType === 'unchanged') return true;
-  return false;
-};
 
 const plain = (diffList) => {
   const iter = (localDiffList, prefix) => localDiffList
-    .filter((elem) => !isUnchanged(elem.type))
+    .filter((elem) => elem.type !== 'unchanged')
     .map((elem) => {
       switch (elem.type) {
         case 'changed': return `Property '${prefix}${elem.name}' was changed from ${getValue(elem.valueBefore)} to ${getValue(elem.valueAfter)}`;
@@ -30,7 +26,8 @@ const plain = (diffList) => {
         default:
           throw new Error(`Unknown element type: '${elem.type}'!`);
       }
-    }).join('\n');
+    })
+    .join('\n');
   return iter(diffList, '');
 };
 

@@ -14,7 +14,7 @@ program
       const textResult = genDiff(firstConfig, secondConfig, program.format);
       console.log(textResult);
     } catch (message) {
-      console.log(`Была ошибка: ${message}`);
+      console.log(`Error: ${message}`);
     }
   })
   .parse(process.argv);
